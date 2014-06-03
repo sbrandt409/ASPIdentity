@@ -3,7 +3,7 @@
 
 <h2>Permissions for Group @Html.DisplayFor(model => model.GroupName)</h2>
 <hr />
-
+<h4>Select Role Permissions for @Html.DisplayFor(model => model.GroupName)</h4>
 @using (Html.BeginForm("GroupRoles", "Groups", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
 {
     @Html.AntiForgeryToken()
@@ -12,34 +12,24 @@
         <div class="form-group">
             <div class="col-md-10">
                 @Html.HiddenFor(model => model.GroupName)
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-10">
                 @Html.HiddenFor(model => model.GroupId)
             </div>
         </div>
-        <h4>Select Role Permissions for @Html.DisplayFor(model => model.GroupName)</h4>
-        <br />
-        <hr />
+        <style>
+            td {
+                padding: 2px;
+            }
+        </style>
         <table>
-            <tr>
-                <th>
-                    Select
-                </th>
-                <th>
-                    Permissions
-                </th>
-            </tr>
             @Html.EditorFor(model => model.Roles)
         </table>
-        <br />
-        <hr />
+        <br/>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
+        <hr />
     </div>
 }
 <div>

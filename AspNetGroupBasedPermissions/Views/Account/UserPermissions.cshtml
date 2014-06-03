@@ -4,28 +4,35 @@
 <h2>Effective Role Permissions for user: @Html.DisplayFor(model => model.UserName)</h2>
 <hr />
 
-<table class="table">
-    <tr>
-        <th>
-            Role Permission
-        </th>
-        <th>
-           Description
-        </th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model.Roles)
-    {
+<table id="myusers" class="table table-striped table-bordered">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
+            <th>Role Permission</th>
+            <th>Role Description</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Roles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            </tr>
+        }
+        </tbody>
 </table>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts{
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#myusers').dataTable();
+        });
+    </script>
+}
