@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 // New namespace imports:
+using System.Diagnostics.CodeAnalysis;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 
@@ -22,7 +24,7 @@ namespace AspNetGroupBasedPermissions.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage =
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage =
             "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
@@ -59,7 +61,7 @@ namespace AspNetGroupBasedPermissions.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage =
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage =
             "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
@@ -102,7 +104,14 @@ namespace AspNetGroupBasedPermissions.Models
             this.FirstName = user.FirstName;
             this.LastName = user.LastName;
             this.Email = user.Email;
+            this.Password = "";
         }
+
+        [StringLength(100, ErrorMessage =
+            "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
 
         [Required]
         [Display(Name = "User Name")]

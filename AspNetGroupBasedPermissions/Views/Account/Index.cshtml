@@ -39,6 +39,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.UserName }) |
+            @*@Html.ActionLink("Manage", "Manage", new { id = item.UserName }) |*@
             @Html.ActionLink("Groups", "UserGroups", new { id = item.UserName }) |
             @Html.ActionLink("Effective Permissions", "UserPermissions", new { id = item.UserName }) ||| 
             @Html.ActionLink("Delete", "Delete", new { id = item.UserName })

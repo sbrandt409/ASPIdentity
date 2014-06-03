@@ -202,14 +202,29 @@ namespace AspNetGroupBasedPermissions.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(EditUserViewModel model)
         {
+            // Remove Password from Validation
+            var password = model.Password;
+            ModelState.Remove("Password");
+
             if (ModelState.IsValid)
             {
+                // Update User Values
                 var user = _db.Users.First(u => u.UserName == model.UserName);
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Email = model.Email;
+
                 _db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 await _db.SaveChangesAsync();
+                
+                // Update Password
+                if (!string.IsNullOrEmpty(password))
+                { 
+                    var store = new UserStore<ApplicationUser>(_db);
+                    var hashedNewPassword = UserManager.PasswordHasher.HashPassword(password);
+                    await store.SetPasswordHashAsync(user, hashedNewPassword);
+                    await store.UpdateAsync(user);
+                }
                 return RedirectToAction("Index");
             }
 

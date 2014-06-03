@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit User</h2>
 
 
 @using (Html.BeginForm())
@@ -12,37 +12,54 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>EditUserViewModel</h4>
+        @*<h4>EditUserViewModel</h4>*@
         <hr />
-        @Html.ValidationSummary(true)
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName)
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.UserName)
+                @*@Html.Encode(Model.UserName)*@
+                @*@Html.Label(Model.UserName, new { @class = "col-md-2 control-label" })*@
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            @Html.ValidationMessageFor(model => model.Password)
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName)
+                <table>
+                    <tr>
+                        <td width="300">@Html.TextBoxFor(m => m.Password, new { @class = "form-control" })</td>
+                        <td width="20"><a href="#" title="Generate Password" id="generatepassword"><i class="glyphicon glyphicon-refresh"></i></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @*@Html.ValidationSummary(true)*@
+        
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FirstName)
             </div>
         </div>
-
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LastName)
             </div>
         </div>
-
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Email)
             </div>
         </div>
@@ -61,4 +78,25 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#generatepassword").click(function (e) {
+                e.preventDefault();
+                $("#Password").val(generatePassword());
+            });
+        });
+
+        function generatePassword() {
+            var characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            var password = "";
+
+            for (x = 0; x <= 8; x++) {
+                i = Math.floor(Math.random() * 62);
+                password += characters.charAt(i);
+            }
+
+            return password;
+        }
+    </script>
 }
